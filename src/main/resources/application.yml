@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: dev
+server:
+  port: 19991
+---
+
+spring:
+  profiles: dev
+  application:
+      name: pl-prd
+  datasource:
+    url:  jdbc:mysql://192.168.1.117:3306/sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username:  root
+    password:  wanban
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+swagger:
+  show: true

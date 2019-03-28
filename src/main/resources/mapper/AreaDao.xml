@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.AreaDao">
+    <!--列出区域列表-->
+    <select id="queryArea" resultType="com.test.domain.orm.Area">
+        SELECT area_id,area_name, priority,
+        create_time,last_edit_time,version
+        FROM tb_area
+        ORDER BY priority
+        DESC
+    </select>
+    <!--根据Id列出具体区域-->
+    <select id="queryAreaById" parameterType="int" resultType="com.test.domain.orm.Area">
+        SELECT area_id,area_name, priority, version,
+        create_time,last_edit_time
+        FROM tb_area
+        WHERE area_id=#{id}
+    </select>
+    <!--获取区域数量-->
+    <select id="getCount" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tb_area
+    </select>
+    <!--插入区域信息-->
+    <insert id="insertArea" useGeneratedKeys="true" keyColumn="area_id" keyProperty="areaId"
+            parameterType="com.test.domain.dto.AreaDTO">
+      INSERT INTO tb_area
+      (area_name, priority,
+        create_time,last_edit_time)
+      VALUE
+      (#{areaName}, #{priority},
+        now(),now())
+    </insert>
+    <!--更新区域信息-->
+    <update id="updateArea" parameterType="com.test.domain.orm.Area">
+        UPDATE tb_area
+        SET
+        <if test="areaName!=null">
+            area_name=#{areaName},
+        </if>
+        <if test="priority!=null">
+            priority=#{priority},
+        </if>
+        version =#{version}+1,
+        last_edit_time=now()
+        WHERE area_id=#{areaId}
+        AND version= #{version}
+    </update>
+
+
+    <update id="updateSelect" parameterType="com.test.domain.orm.Area">
+        UPDATE tb_area
+        SET
+        <if test="areaName!=null">
+            area_name=#{areaName},
+        </if>
+        <if test="priority!=null">
+            priority=#{priority},
+        </if>
+        testSelect = #{testSelect} +1,
+        last_edit_time=now()
+        WHERE area_id=#{areaId}
+    </update>
+    <!--删除区域信息-->
+    <delete id="deleteArea" parameterType="int">
+      DELETE FROM tb_area WHERE area_id=#{areaId}
+    </delete>
+
+</mapper>
