@@ -6,6 +6,8 @@ import com.test.common.util.TextUtil;
 import com.test.domain.dto.AreaDTO;
 import com.test.domain.orm.Area;
 import com.test.service.IAreaService;
+import com.test.thread.CallBack;
+import com.test.thread.QueueThreadUtils;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 区域api
@@ -26,7 +32,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/superAdmin")
-public class AreaController {
+public class AreaController implements CallBack<String, Integer> {
 
     private Logger log = LoggerFactory.getLogger(AreaController.class);
 
@@ -37,6 +43,57 @@ public class AreaController {
     @GetMapping(value = "getAddress")
     public ResultJson<String> getAddress(String address) {
         return ResultJson.createBySuccess(TextUtil.base58checkToHexString(address));
+    }
+
+    /**
+     * 多线程
+     */
+    @Autowired
+    private QueueThreadUtils queueThreadUtils;
+
+
+    @ApiOperation(value = "王斑: ", notes = "")
+    @GetMapping(value = "testLock")
+    public ResultJson<String> testLock() {
+
+//        CountDownLatch countDownLatch = new CountDownLatch(1000);
+        List<Integer> list = new ArrayList<>(1000);
+        for (int i = 0; i < 1000; i++) {
+            list.add(i + 1);
+        }
+
+        try {
+            queueThreadUtils.executeData(10, list, this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//                    countDownLatch.countDown();
+
+
+//        try {
+//            countDownLatch.await();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+
+        return ResultJson.createBySuccess("");
+    }
+
+    @Override
+    public void solve(String result, Integer info) {
+//                    for (int j = 0; j < 8; j++) {
+        try {
+            Area area = iAreaService.getAreaById(10);
+            area.setAreaName("" + (new Random(100).nextInt() + 1));
+            if (!iAreaService.modifyArea(area)) {
+                log.error("=======================> 更新错误");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//                    }
     }
 
     @ApiOperation(value = "王斑: ", notes = "")
@@ -98,4 +155,6 @@ public class AreaController {
         return iAreaService.deleteAreaById(areaId) ? ResultJson.createBySuccess("删除成功") : ResultJson.createByErrorMsg("删除失败");
 
     }
+
+
 }

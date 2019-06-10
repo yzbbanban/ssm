@@ -18,6 +18,8 @@ public class Area implements Serializable {
     private String areaName;
     @ApiModelProperty("权重，越大越在前显示")
     private Integer priority;
+    @ApiModelProperty("状态")
+    private Integer areaStatus;
     @ApiModelProperty("创建时间")
     private Date createTime;
     @ApiModelProperty("更新时间")
@@ -39,6 +41,14 @@ public class Area implements Serializable {
 
     public void setAreaName(String areaName) {
         this.areaName = areaName;
+    }
+
+    public Integer getAreaStatus() {
+        return areaStatus;
+    }
+
+    public void setAreaStatus(Integer areaStatus) {
+        this.areaStatus = areaStatus;
     }
 
     public Integer getPriority() {
@@ -80,6 +90,7 @@ public class Area implements Serializable {
                 "areaId=" + areaId +
                 ", areaName='" + areaName + '\'' +
                 ", priority=" + priority +
+                ", areaStatus=" + areaStatus +
                 ", createTime=" + createTime +
                 ", lastEditTime=" + lastEditTime +
                 ", version=" + version +

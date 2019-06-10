@@ -42,10 +42,9 @@
         <if test="priority!=null">
             priority=#{priority},
         </if>
-        version =#{version}+1,
+        testSelect=testSelect+1,
         last_edit_time=now()
         WHERE area_id=#{areaId}
-        AND version= #{version}
     </update>
 
 
