@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.AssetWalletDao">
+
+
+  <sql id="baseResult">
+        id, userId, coinId, amount, amountFrozen,
+        coinInAddress,createTime,updateTime
+    </sql>
+
+  <sql id="baseJoinResult">
+        t.id, t.coinId, t.amount as balance
+    </sql>
+
+    <!-- 添加资产钱包 -->
+    <insert id="saveAssetWallet" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO asset_wallet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            userId,
+            coinId,
+            amount,
+            amountFrozen,
+            coinInAddress,
+            createTime,
+            updateTime,
+        </trim>
+        <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+            #{userId},
+            #{coinId},
+            #{amount},
+            #{amountFrozen},
+            #{coinInAddress},
+            UNIX_TIMESTAMP(now(3))*1000,
+            UNIX_TIMESTAMP(now(3))*1000,
+        </trim>
+    </insert>
+
+  <!--根据用户id和货币id获取用户钱包信息-->
+  <select id="getAssetWalletByUserIdAndCoinId" resultType="com.test.domain.orm.AssetWallet">
+    SELECT
+    <include refid="baseResult"></include>
+    FROM asset_wallet
+    where userId=#{userId} and coinId = #{coinId};
+  </select>
+
+  <!--根据币种ID 用户iD 地址 获取用户钱包-->
+  <select id="getAssetWalletByAddressCoinUserId" resultType="com.test.domain.orm.AssetWallet">
+    SELECT
+    <include refid="baseResult"></include>
+    FROM asset_wallet
+    WHERE 1=1
+    AND coinInAddress = #{address}
+    AND coinId = #{coinId}
+    AND userId = #{userId}
+  </select>
+
+  <!-- 修改钱包余额 -->
+  <update id="updateWalletAmount">
+        UPDATE asset_wallet
+        SET
+          amount = amount + #{amount},
+          amountFrozen = amountFrozen + #{amountFrozen},
+          updateTime =UNIX_TIMESTAMP(now(3))*1000
+        WHERE
+        id = #{id}
+        AND (amount + #{amount}) >= 0
+        AND (amountFrozen + #{amountFrozen}) >= 0
+    </update>
+
+
+</mapper>

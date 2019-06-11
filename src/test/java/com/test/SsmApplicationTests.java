@@ -73,7 +73,11 @@ public class SsmApplicationTests {
     @Test
     public void testLock() throws InterruptedException {
 
+        //删除缓存
 
+        //更新数据库
+
+        //投递消息队列，删除缓存
 
     }
 
