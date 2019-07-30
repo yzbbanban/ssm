@@ -23,6 +23,8 @@ public class AssetWallet {
     private Long createTime;
     @ApiModelProperty(value = "修改时间")
     private Long updateTime;
+    @ApiModelProperty(value = "verison")
+    private Long version;
 
     public Long getId() {
         return id;
@@ -88,6 +90,14 @@ public class AssetWallet {
         this.updateTime = updateTime;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "AssetWallet{" +
@@ -99,6 +109,7 @@ public class AssetWallet {
                 ", coinInAddress='" + coinInAddress + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", version=" + version +
                 '}';
     }
 }

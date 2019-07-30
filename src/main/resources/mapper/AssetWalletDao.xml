@@ -5,7 +5,7 @@
 
   <sql id="baseResult">
         id, userId, coinId, amount, amountFrozen,
-        coinInAddress,createTime,updateTime
+        coinInAddress,createTime,updateTime,verison
     </sql>
 
   <sql id="baseJoinResult">
@@ -60,12 +60,56 @@
         SET
           amount = amount + #{amount},
           amountFrozen = amountFrozen + #{amountFrozen},
-          updateTime =UNIX_TIMESTAMP(now(3))*1000
+          updateTime =UNIX_TIMESTAMP(now(3))*1000,
+          version=version+1
         WHERE
         id = #{id}
         AND (amount + #{amount}) >= 0
         AND (amountFrozen + #{amountFrozen}) >= 0
+        AND version=#{version}
     </update>
 
 
+    <!-- 批量修改钱包余额 -->
+    <update id="updateWalletAmountList" parameterType="java.util.List">
+        <foreach collection="list" item="bean" index="index" open="" close="" separator=";">
+            UPDATE asset_wallet
+            SET
+            amount = 10
+            WHERE
+            id = #{bean.id}
+        </foreach>
+    </update>
+
+    <!-- 批量修改钱包余额2 -->
+    <update id="updateWalletAmountList2" parameterType="java.util.List">
+        UPDATE asset_wallet
+        SET
+        amount = CASE id
+        <foreach collection="list" item="bean" index="index" open="" close="END," separator="">
+            WHEN #{bean.id} THEN amount + #{bean.amount}
+        </foreach>
+        amountFrozen = CASE id
+        <foreach collection="list" item="bean" index="index" open="" close="END," separator="">
+            WHEN #{bean.id} THEN amountFrozen + #{bean.amount}
+        </foreach>
+        version = CASE id
+        <foreach collection="list" item="bean" index="index" open="" close="END" separator="">
+            WHEN #{bean.id} THEN version + 1
+        </foreach>
+        WHERE id in
+        <foreach collection="list" item="bean" index="index" open="(" close=")" separator=",">
+            #{bean.id}
+        </foreach>
+        AND
+        CASE id
+        <foreach collection="list" item="bean" index="index" open="" close="END" separator="">
+            WHEN #{bean.id}
+            THEN
+            (amount + #{bean.amount}) >= 0
+            AND version=#{bean.version}
+            AND (amountFrozen + #{bean.amountFrozen}) >= 0
+        </foreach>
+
+    </update>
 </mapper>

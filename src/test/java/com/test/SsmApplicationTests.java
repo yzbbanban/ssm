@@ -1,13 +1,13 @@
 package com.test;
 
+import com.test.dao.AssetWalletDao;
 import com.test.domain.orm.Area;
+import com.test.domain.orm.AssetWallet;
 import com.test.service.IAreaService;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.core.PeerAddress;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.RegTestParams;
-import org.bitcoinj.utils.BriefLogFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,8 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicLong;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,6 +29,9 @@ public class SsmApplicationTests {
 
     @Autowired
     private IAreaService areaService;
+
+    @Autowired
+    private AssetWalletDao assetWalletDao;
 
     @Before
     public void init() throws Exception {
@@ -73,11 +77,26 @@ public class SsmApplicationTests {
     @Test
     public void testLock() throws InterruptedException {
 
-        //删除缓存
+        //批量更新
 
-        //更新数据库
+            List<AssetWallet> wallet=new ArrayList<>();
+            AssetWallet wa=new AssetWallet();
+            wa.setVersion(0L);
+            wa.setAmount(new BigDecimal("10"));
+            wa.setAmountFrozen(new BigDecimal("-10"));
+            wa.setId(2L);
+            wallet.add(wa);
+//
+            AssetWallet wa2=new AssetWallet();
+            wa2.setVersion(0L);
+            wa2.setAmount(new BigDecimal("8"));
+            wa2.setAmountFrozen(new BigDecimal("-8"));
+            wa2.setId(1L);
+            wallet.add(wa2);
 
-        //投递消息队列，删除缓存
+            int row = assetWalletDao.updateWalletAmountList(wallet);
+
+
 
     }
 

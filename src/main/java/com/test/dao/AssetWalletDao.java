@@ -6,6 +6,8 @@ import com.test.domain.dto.UpdateWalletAmountDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 资产钱包
  *
@@ -51,5 +53,19 @@ public interface AssetWalletDao {
     AssetWallet getAssetWalletByAddressCoinUserId(@Param("coinId") Integer coinId,
                                                   @Param("userId") Integer userId,
                                                   @Param("address") String address);
+    /**
+     * 批量修改资产
+     *
+     * @param list 修改列表
+     * @return 影响行
+     */
+    int updateWalletAmountList(List<AssetWallet> list);
+
+    /**
+     * 批量修改资产2
+     * @param list adw
+     * @return daw
+     */
+    int updateWalletAmountList2(List<AssetWallet> list);
 
 }

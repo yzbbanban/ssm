@@ -10,7 +10,7 @@ spring:
   application:
       name: pl-prd
   datasource:
-    url:  jdbc:mysql://192.168.1.117:3306/sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url:  jdbc:mysql://192.168.1.117:3306/sms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username:  root
     password:  wanban
     type: com.alibaba.druid.pool.DruidDataSource
