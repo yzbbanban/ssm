@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.dao.CoinInDao">
+    <!-- 查询所有币种信息 -->
+    <insert id="saveFinanceCoinInRecord">
+        INSERT INTO finance_coin_in_record
+        (
+            coinId,
+            coinName,
+            targetAddress,
+            amount,
+            txid,
+            affirmNo,
+            blockHeight,
+            walletId,
+            pullTime,
+            updateNewTime,
+            isValid,
+            disposeLog,
+            isNotice,
+            useType,
+            useTag
+        ) VALUES
+        (
+            8,
+            'USDT',
+            #{targetAddress},
+            #{amount},
+            #{txid},
+            31,
+            57702,
+            17,
+            UNIX_TIMESTAMP(),
+            UNIX_TIMESTAMP(),
+            1,
+            '',0,
+            1,
+            #{useTag}
+        )
+    </insert>
+
+</mapper>

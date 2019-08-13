@@ -9,11 +9,30 @@ spring:
   profiles: dev
   application:
       name: pl-prd
+#  datasource:
+#    url:  jdbc:mysql://192.168.1.117:3306/sms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#    username:  root
+#    password:  wanban
+#    type: com.alibaba.druid.pool.DruidDataSource
+
   datasource:
-    url:  jdbc:mysql://192.168.1.117:3306/sms?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username:  root
-    password:  wanban
+    url: jdbc:mysql://192.168.1.116:3306/ew_core?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    database: 1
+    cluster:
+      nodes: 192.168.1.31:7000,192.168.1.31:7001,192.168.1.31:7002,192.168.1.32:7000,192.168.1.32:7001,192.168.1.32:7002
+    password: admin123
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 100
+        max-wait: 5000
+        max-idle: 8
+        min-idle: 0
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:

@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -75,28 +76,32 @@ public class SsmApplicationTests {
     }
 
     @Test
+    @Transactional(rollbackFor = Exception.class)
     public void testLock() throws InterruptedException {
 
         //批量更新
 
-            List<AssetWallet> wallet=new ArrayList<>();
-            AssetWallet wa=new AssetWallet();
-            wa.setVersion(0L);
-            wa.setAmount(new BigDecimal("10"));
-            wa.setAmountFrozen(new BigDecimal("-10"));
-            wa.setId(2L);
-            wallet.add(wa);
+        List<AssetWallet> wallet = new ArrayList<>();
+        AssetWallet wa = new AssetWallet();
+        wa.setVersion(0L);
+        wa.setAmount(new BigDecimal("10"));
+        wa.setAmountFrozen(new BigDecimal("-10"));
+        wa.setId(2L);
+        wallet.add(wa);
 //
-            AssetWallet wa2=new AssetWallet();
-            wa2.setVersion(0L);
-            wa2.setAmount(new BigDecimal("8"));
-            wa2.setAmountFrozen(new BigDecimal("-8"));
-            wa2.setId(1L);
-            wallet.add(wa2);
+        AssetWallet wa2 = new AssetWallet();
+        wa2.setVersion(0L);
+        wa2.setAmount(new BigDecimal("8"));
+        wa2.setAmountFrozen(new BigDecimal("-8"));
+        wa2.setId(1L);
+        wallet.add(wa2);
 
-            int row = assetWalletDao.updateWalletAmountList(wallet);
+        int row = assetWalletDao.updateWalletAmountList2(wallet);
+        if (row < wallet.size()) {
+            throw new RuntimeException("");
+        }
 
-
+        System.out.println("======>" + row);
 
     }
 
