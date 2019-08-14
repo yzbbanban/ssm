@@ -6,6 +6,15 @@ public class CoinInDTO {
     private String coinName;
     private String txid;
     private String useTag;
+    private Long createTime;
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
 
     public String getTxid() {
         return txid;
@@ -55,6 +64,7 @@ public class CoinInDTO {
                 ", coinName='" + coinName + '\'' +
                 ", txid='" + txid + '\'' +
                 ", useTag='" + useTag + '\'' +
+                ", createTime=" + createTime +
                 '}';
     }
 }

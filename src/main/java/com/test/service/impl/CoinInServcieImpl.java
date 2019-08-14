@@ -27,6 +27,7 @@ public class CoinInServcieImpl implements ICoinInService {
     @Override
     public boolean addRecord(CoinInDTO coinInDTO) {
         coinInDTO.setTxid(UUID.randomUUID().toString());
+        coinInDTO.setCreateTime(System.currentTimeMillis() / 1000);
         return coinInDao.saveFinanceCoinInRecord(coinInDTO) > 0;
     }
 }
