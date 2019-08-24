@@ -5,37 +5,37 @@
     <insert id="saveFinanceCoinInRecord">
         INSERT INTO finance_coin_in_record
         (
-            coinId,
-            coinName,
-            targetAddress,
-            amount,
-            txid,
-            affirmNo,
-            blockHeight,
-            walletId,
-            pullTime,
-            updateNewTime,
-            isValid,
-            disposeLog,
-            isNotice,
-            useType,
-            useTag
+        coinId,
+        coinName,
+        targetAddress,
+        amount,
+        txid,
+        affirmNo,
+        blockHeight,
+        walletId,
+        pullTime,
+        updateNewTime,
+        isValid,
+        disposeLog,
+        isNotice,
+        useType,
+        useTag
         ) VALUES
         (
-            8,
-            'USDT',
-            #{targetAddress},
-            #{amount},
-            #{txid},
-            31,
-            57702,
-            17,
-            #{createTime},
-            #{createTime},
-            1,
-            '',0,
-            1,
-            #{useTag}
+        8,
+        'USDT',
+        #{targetAddress},
+        #{amount},
+        #{txid},
+        31,
+        57702,
+        17,
+        #{createTime},
+        #{createTime},
+        1,
+        '',0,
+        1,
+        #{useTag}
         )
     </insert>
 

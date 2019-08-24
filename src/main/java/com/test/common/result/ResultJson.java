@@ -4,10 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 
  * @author wangban
  * @date 9:57 2019/3/7
- */ 
+ */
 @ApiModel("结果")
 public class ResultJson<T> {
 

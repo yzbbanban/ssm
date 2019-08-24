@@ -53,6 +53,7 @@ public interface AssetWalletDao {
     AssetWallet getAssetWalletByAddressCoinUserId(@Param("coinId") Integer coinId,
                                                   @Param("userId") Integer userId,
                                                   @Param("address") String address);
+
     /**
      * 批量修改资产
      *
@@ -63,6 +64,7 @@ public interface AssetWalletDao {
 
     /**
      * 批量修改资产2
+     *
      * @param list adw
      * @return daw
      */

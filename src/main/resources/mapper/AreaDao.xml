@@ -25,11 +25,11 @@
     <!--插入区域信息-->
     <insert id="insertArea" useGeneratedKeys="true" keyColumn="area_id" keyProperty="areaId"
             parameterType="com.test.domain.dto.AreaDTO">
-      INSERT INTO tb_area
-      (area_name, priority,
+        INSERT INTO tb_area
+        (area_name, priority,
         create_time,last_edit_time)
-      VALUE
-      (#{areaName}, #{priority},
+        VALUE
+        (#{areaName}, #{priority},
         now(),now())
     </insert>
     <!--更新区域信息-->
@@ -63,7 +63,7 @@
     </update>
     <!--删除区域信息-->
     <delete id="deleteArea" parameterType="int">
-      DELETE FROM tb_area WHERE area_id=#{areaId}
+        DELETE FROM tb_area WHERE area_id=#{areaId}
     </delete>
 
 </mapper>

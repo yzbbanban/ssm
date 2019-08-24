@@ -110,7 +110,7 @@ public class TronBase58 {
     }
 
     /**
-     *  number -> number / 58, returns number % 58
+     * number -> number / 58, returns number % 58
      */
     private static byte divmod58(byte[] number, int startAt) {
         int remainder = 0;

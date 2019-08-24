@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 /**
- *
  * @author wangban
  * @date 10:18 2019/3/7
  */

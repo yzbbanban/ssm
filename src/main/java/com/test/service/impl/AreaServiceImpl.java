@@ -55,6 +55,8 @@ public class AreaServiceImpl implements IAreaService {
      */
     @Override
     public Area getAreaById(int areaId) {
+
+
         return areaDao.queryAreaById(areaId);
     }
 

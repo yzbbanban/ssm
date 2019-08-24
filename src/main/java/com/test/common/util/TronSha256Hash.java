@@ -17,7 +17,7 @@ import java.util.Arrays;
 import static com.google.common.base.Preconditions.checkArgument;
 
 
-public class TronSha256Hash implements Serializable, Comparable<TronSha256Hash>{
+public class TronSha256Hash implements Serializable, Comparable<TronSha256Hash> {
     public static final int LENGTH = 32; // bytes
     public static final TronSha256Hash ZERO_HASH = wrap(new byte[LENGTH]);
 
@@ -40,7 +40,7 @@ public class TronSha256Hash implements Serializable, Comparable<TronSha256Hash>{
         return hash;
     }
 
-    public long getBlockNum(){
+    public long getBlockNum() {
         return blockNum;
     }
 
@@ -162,7 +162,7 @@ public class TronSha256Hash implements Serializable, Comparable<TronSha256Hash>{
     /**
      * Calculates the SHA-256 hash of the given byte range.
      *
-     * @param input the array containing the bytes to hash
+     * @param input  the array containing the bytes to hash
      * @param offset the offset within the array of the bytes to hash
      * @param length the number of bytes to hash
      * @return the hash (in big-endian order)
@@ -186,7 +186,7 @@ public class TronSha256Hash implements Serializable, Comparable<TronSha256Hash>{
     /**
      * Calculates the SHA-256 hash of the given byte range, and then hashes the resulting hash again.
      *
-     * @param input the array containing the bytes to hash
+     * @param input  the array containing the bytes to hash
      * @param offset the offset within the array of the bytes to hash
      * @param length the number of bytes to hash
      * @return the double-hash (in big-endian order)
